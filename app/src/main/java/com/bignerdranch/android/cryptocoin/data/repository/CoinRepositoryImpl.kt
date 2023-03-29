@@ -1,7 +1,6 @@
 package com.bignerdranch.android.cryptocoin.data.repository
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.bignerdranch.android.cryptocoin.data.database.AppDatabase
@@ -9,9 +8,7 @@ import com.bignerdranch.android.cryptocoin.data.mapper.CoinMapper
 import com.bignerdranch.android.cryptocoin.data.network.ApiFactory
 import com.bignerdranch.android.cryptocoin.domain.CoinInfo
 import com.bignerdranch.android.cryptocoin.domain.CoinRepository
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.delay
-import java.util.concurrent.TimeUnit
 
 class CoinRepositoryImpl(private val application: Application) : CoinRepository {
     private val base = AppDatabase.getInstance(application)
@@ -35,15 +32,18 @@ class CoinRepositoryImpl(private val application: Application) : CoinRepository 
 
     override suspend fun loadData() {
         while (true) {
-            val topCoins = apiService.getTopCoinsInfo(limit = 50)
-            val fSyms = mapper.mapNamesListToString(topCoins)
-            val jsonContainer = apiService.getFullPriceList(fSyms = fSyms)
-            val coinInfoDtoList =
-                mapper.mapJsonContainerToListCoinInfoDto(jsonContainer)
-            val dbModelList = coinInfoDtoList.map {
-                mapper.mapDtoToDbModel(it)
+            try {
+                val topCoins = apiService.getTopCoinsInfo(limit = 50)
+                val fSyms = mapper.mapNamesListToString(topCoins)
+                val jsonContainer = apiService.getFullPriceList(fSyms = fSyms)
+                val coinInfoDtoList =
+                    mapper.mapJsonContainerToListCoinInfoDto(jsonContainer)
+                val dbModelList = coinInfoDtoList.map {
+                    mapper.mapDtoToDbModel(it)
+                }
+                coinInfoDao.insertPriceList(dbModelList)
+            } catch (e: Exception) {
             }
-            coinInfoDao.insertPriceList(dbModelList)
             delay(1000)
         }
     }
