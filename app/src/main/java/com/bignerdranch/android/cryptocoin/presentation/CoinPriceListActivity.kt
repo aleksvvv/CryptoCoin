@@ -3,9 +3,9 @@ package com.bignerdranch.android.cryptocoin.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.bignerdranch.android.cryptocoin.R
 import com.bignerdranch.android.cryptocoin.databinding.ActivityCoinPrceListBinding
 import com.bignerdranch.android.cryptocoin.domain.CoinInfo
+import com.bignerdranch.android.cryptocoin.presentation.adapter.CoinInfoAdapter
 
 
 class CoinPriceListActivity : AppCompatActivity() {

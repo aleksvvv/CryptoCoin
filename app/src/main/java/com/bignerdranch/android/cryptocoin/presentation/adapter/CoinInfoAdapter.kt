@@ -1,4 +1,4 @@
-package com.bignerdranch.android.cryptocoin.presentation
+package com.bignerdranch.android.cryptocoin.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,9 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.cryptocoin.R
-import com.bignerdranch.android.cryptocoin.data.network.ApiFactory
 import com.bignerdranch.android.cryptocoin.domain.CoinInfo
-import com.bignerdranch.android.cryptocoin.utils.convertTimestampToTime
 import com.squareup.picasso.Picasso
 
 
@@ -42,8 +40,8 @@ class CoinInfoAdapter(private val context: Context) : RecyclerView.Adapter<CoinI
                 tvSymbols.text = String.format(symbolsTemplate, fromSymbol, toSymbol)
                 tvPrice.text = price
                 tvLastUpdate.text =
-                    String.format(lastUpdateTemplate, convertTimestampToTime(lastUpdate))
-                Picasso.get().load(ApiFactory.BASE_IMAGE_URL + imageUrl).into(ivLogoCoin)
+                    String.format(lastUpdateTemplate, lastUpdate)
+                Picasso.get().load(imageUrl).into(ivLogoCoin)
                 itemView.setOnClickListener {
                     onCoinClickListener?.onCoinClick(this)
                 }

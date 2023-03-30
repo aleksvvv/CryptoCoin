@@ -1,9 +1,6 @@
 package com.bignerdranch.android.cryptocoin.data.network.model
 
 import androidx.room.PrimaryKey
-import com.bignerdranch.android.cryptocoin.data.network.ApiFactory.BASE_IMAGE_URL
-import com.bignerdranch.android.cryptocoin.utils.convertTimestampToTime
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class CoinInfoDto(
@@ -86,12 +83,4 @@ data class CoinInfoDto(
     val totalTopTierVolume24HourTo: String?,
     @SerializedName("IMAGEURL")
     val imageUrl: String?
-) {
-    fun getFormattedTime(): String {
-        return convertTimestampToTime(lastUpdate)
-    }
-
-    fun getFullImageUrl(): String {
-        return BASE_IMAGE_URL + imageUrl
-    }
-}
+)

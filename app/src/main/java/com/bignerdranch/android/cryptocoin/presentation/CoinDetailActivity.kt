@@ -6,10 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.bignerdranch.android.cryptocoin.R
-import com.bignerdranch.android.cryptocoin.data.network.ApiFactory
 import com.bignerdranch.android.cryptocoin.databinding.ActivityCoinDetailBinding
-import com.bignerdranch.android.cryptocoin.utils.convertTimestampToTime
 import com.squareup.picasso.Picasso
 
 
@@ -35,10 +32,10 @@ class CoinDetailActivity : AppCompatActivity() {
             binding.tvMinPrice.text = it.lowDay
             binding.tvMaxPrice.text = it.highDay
             binding.tvLastMarket.text = it.lastMarket
-            binding.tvLastUpdate.text = convertTimestampToTime(it.lastUpdate)
+            binding.tvLastUpdate.text = it.lastUpdate
             binding.tvFromSymbol.text = it.fromSymbol
             binding.tvToSymbol.text = it.toSymbol
-            Picasso.get().load((ApiFactory.BASE_IMAGE_URL + it.imageUrl)).into(binding.ivLogoCoin)
+            Picasso.get().load( it.imageUrl).into(binding.ivLogoCoin)
         })
     }
 
