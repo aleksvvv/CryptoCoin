@@ -3,6 +3,7 @@ package com.bignerdranch.android.cryptocoin.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.bignerdranch.android.cryptocoin.R
 import com.bignerdranch.android.cryptocoin.databinding.ActivityCoinPrceListBinding
 import com.bignerdranch.android.cryptocoin.domain.CoinInfo
 import com.bignerdranch.android.cryptocoin.presentation.adapter.CoinInfoAdapter
@@ -21,11 +22,11 @@ class CoinPriceListActivity : AppCompatActivity() {
         val adapter = CoinInfoAdapter(this)
         adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
             override fun onCoinClick(coinPriceInfo: CoinInfo) {
-                val intent = CoinDetailActivity.newIntent(
-                    this@CoinPriceListActivity,
-                    coinPriceInfo.fromSymbol
-                )
-                startActivity(intent)
+                if (binding.fragmentContainer == null){
+                    launchActivity(coinPriceInfo.fromSymbol)
+                } else {
+                    launchFragment(coinPriceInfo.fromSymbol)
+                }
             }
         }
         binding.rvCoinPriceList.adapter = adapter
@@ -34,6 +35,20 @@ class CoinPriceListActivity : AppCompatActivity() {
         viewModel.coinInfoList.observe(this) {
             adapter.submitList(it)
         }
+    }
+    private fun launchActivity(fromSymbol: String){
+        val intent = CoinDetailActivity.newIntent(
+            this@CoinPriceListActivity,
+            fromSymbol
+        )
+        startActivity(intent)
+    }
+    private fun launchFragment(fromSymbol:String){
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, CoinDetailFragment.newInstance(fromSymbol))
+            .addToBackStack(null)
+            .commit()
     }
 
 }
