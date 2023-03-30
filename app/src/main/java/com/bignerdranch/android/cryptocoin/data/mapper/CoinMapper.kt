@@ -1,7 +1,6 @@
 package com.bignerdranch.android.cryptocoin.data.mapper
 
 import com.bignerdranch.android.cryptocoin.data.database.CoinInfoDbModel
-import com.bignerdranch.android.cryptocoin.data.network.ApiFactory
 import com.bignerdranch.android.cryptocoin.data.network.model.CoinInfoDto
 import com.bignerdranch.android.cryptocoin.data.network.model.CoinInfoJsonContainerDto
 import com.bignerdranch.android.cryptocoin.data.network.model.CoinNamesListDto
