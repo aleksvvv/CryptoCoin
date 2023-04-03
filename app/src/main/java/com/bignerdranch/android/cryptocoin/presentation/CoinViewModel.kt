@@ -9,7 +9,7 @@ import com.bignerdranch.android.cryptocoin.domain.GetCoinInfoUseCase
 import com.bignerdranch.android.cryptocoin.domain.LoadDataUseCase
 import kotlinx.coroutines.launch
 
-class CoinViewModel(application: Application) : AndroidViewModel(application) {
+class CoinViewModel (application: Application) : AndroidViewModel(application) {
 
     private val repositoryImpl = CoinRepositoryImpl(application)
     private val getCoinInfoListUseCase = GetCoinInfoListUseCase(repositoryImpl)
@@ -19,12 +19,7 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
     val coinInfoList = getCoinInfoListUseCase()
     fun getDetailInfo(fSym: String) = getCoinInfoUseCase(fSym)
 
-
     init {
-        viewModelScope.launch {
             loadDataUseCase()
-        }
     }
-
-
 }
