@@ -5,8 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
-import com.bignerdranch.android.cryptocoin.data.RefreshDataWorker
-import com.bignerdranch.android.cryptocoin.data.database.AppDatabase
+import com.bignerdranch.android.cryptocoin.data.worker.RefreshDataWorker
 import com.bignerdranch.android.cryptocoin.data.database.CoinInfoDao
 import com.bignerdranch.android.cryptocoin.data.mapper.CoinMapper
 import com.bignerdranch.android.cryptocoin.domain.CoinInfo

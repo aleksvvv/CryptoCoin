@@ -1,4 +1,4 @@
-package com.bignerdranch.android.cryptocoin.data
+package com.bignerdranch.android.cryptocoin.data.worker
 
 import android.content.Context
 import androidx.work.CoroutineWorker
@@ -6,19 +6,24 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkerParameters
 import com.bignerdranch.android.cryptocoin.data.database.AppDatabase
+import com.bignerdranch.android.cryptocoin.data.database.CoinInfoDao
 import com.bignerdranch.android.cryptocoin.data.mapper.CoinMapper
 import com.bignerdranch.android.cryptocoin.data.network.ApiFactory
+import com.bignerdranch.android.cryptocoin.data.network.ApiService
 import kotlinx.coroutines.delay
 
 class RefreshDataWorker(
     context: Context,
-    params: WorkerParameters
+    params: WorkerParameters,
+    private val coinInfoDao: CoinInfoDao,
+    private val mapper: CoinMapper,
+    private val apiService: ApiService
 ) : CoroutineWorker(context, params) {
 
-    private val base = AppDatabase.getInstance(context)
-    private val coinInfoDao = base.coinPriceInfoDao()
-    private val mapper = CoinMapper()
-    private val apiService = ApiFactory.apiService
+//    private val base = AppDatabase.getInstance(context)
+//    private val coinInfoDao = base.coinPriceInfoDao()
+//    private val mapper = CoinMapper()
+//    private val apiService = ApiFactory.apiService
 
     override suspend fun doWork(): Result {
         while (true) {
@@ -40,7 +45,7 @@ class RefreshDataWorker(
 
     companion object {
         const val NAME_WORK = "RefreshDataWorker"
-        fun makeRequest():OneTimeWorkRequest{
+        fun makeRequest(): OneTimeWorkRequest {
             return OneTimeWorkRequestBuilder<RefreshDataWorker>().build()
         }
     }
