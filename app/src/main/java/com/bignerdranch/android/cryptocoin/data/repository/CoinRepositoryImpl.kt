@@ -7,15 +7,17 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import com.bignerdranch.android.cryptocoin.data.RefreshDataWorker
 import com.bignerdranch.android.cryptocoin.data.database.AppDatabase
+import com.bignerdranch.android.cryptocoin.data.database.CoinInfoDao
 import com.bignerdranch.android.cryptocoin.data.mapper.CoinMapper
 import com.bignerdranch.android.cryptocoin.domain.CoinInfo
 import com.bignerdranch.android.cryptocoin.domain.CoinRepository
+import javax.inject.Inject
 
-class CoinRepositoryImpl(private val application: Application) : CoinRepository {
-    private val base = AppDatabase.getInstance(application)
-    private val coinInfoDao = base.coinPriceInfoDao()
-    private val mapper = CoinMapper()
-
+class CoinRepositoryImpl @Inject constructor(
+    private val application: Application,
+    private val mapper : CoinMapper,
+    private val coinInfoDao: CoinInfoDao
+) : CoinRepository {
 
     override fun getCoinInfoList(): LiveData<List<CoinInfo>> {
         return coinInfoDao.getPriceList().map {

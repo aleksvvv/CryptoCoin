@@ -1,5 +1,6 @@
 package com.bignerdranch.android.cryptocoin.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bignerdranch.android.cryptocoin.databinding.FragmentCoinDetailBinding
 import com.squareup.picasso.Picasso
-
+import javax.inject.Inject
 
 class CoinDetailFragment : Fragment() {
 
@@ -18,6 +19,18 @@ class CoinDetailFragment : Fragment() {
     get() = _binding ?: throw java.lang.RuntimeException("FragmentCoinDetailBinding is null")
 
     private lateinit var viewModel: CoinViewModel
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (requireActivity().application as CoinApp).component
+    }
+
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
